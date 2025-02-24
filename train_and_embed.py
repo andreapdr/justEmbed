@@ -172,7 +172,6 @@ if __name__ == "__main__":
     parser.add_argument("--val_size", type=float, default=0.2)
     parser.add_argument("--lr", type=float, default=5e-4)
     parser.add_argument("--train_backbone", action="store_true")
-    parser.add_argument("--batchsize", type=int, default=4)
     parser.add_argument("--device", type=str, default="cuda")
     args = parser.parse_args()
     main(args)
