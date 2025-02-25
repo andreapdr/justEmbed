@@ -117,14 +117,17 @@ def main(args):
 
     # freeze base model -> train only fresh init classification head
     if not args.train_backbone:
+        print("- freezing base model weights")
+        for _, layer_weights in model.base_model.named_parameters():
+            layer_weights.requires_grad = False
+
+        # check trainable layers    
         trainable_layers = []
-        print("- freezing backbone model weights")
         for layer_name, layer_weights in model.named_parameters():
-            if "classifier" not in layer_name:
-                layer_weights.requires_grad = False
-            else:
+            if layer_weights.requires_grad == True:
                 trainable_layers.append(layer_name)
         print(f"- trainable layers: {trainable_layers}")
+    
     def tokenize_dataset(sample):
         return tokenizer(sample["text"], truncation=True, max_length=args.max_length, padding="max_length", return_tensors="pt")
     
