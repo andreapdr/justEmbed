@@ -81,7 +81,7 @@ def embed(model, tokenizer, data, selection_strategy, args):
         texts, labels = zip(*((d["text"], d["label"]) for d in batch))
         with torch.no_grad():
             model_inputs = tokenizer(texts, truncation=True, max_length=args.max_length, padding="max_length", return_tensors="pt")     # pad each batch to max_length
-        output = model(**model_inputs.to(args.device), output_hidden_states=True)
+            output = model(**model_inputs.to(args.device), output_hidden_states=True)
         logits = output.logits
         hidden_states = output.hidden_states
         last_hidden_states = hidden_states[-1]
